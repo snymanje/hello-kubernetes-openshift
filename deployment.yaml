@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hello-kubernetes
+  namespace: hello-kube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-kubernetes
+  template:
+    metadata:
+      labels:
+        app: hello-kubernetes
+    spec:
+      restartPolicy: Always
+      serviceAccountName: hellokube
+      imagePullSecrets:
+        - name: dev-platforms-pullsecret-pull-secret
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext: {}
+      containers:
+        - name: hello-kubernetes
+          image: 'central-quay-quay-registry.apps.ocp5.ho.fosltd.co.za/dev-platforms/hello-kubernetes:v1.10'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: MESSAGE
+              value: Hello from OpenShift!
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      serviceAccount: hellokube
