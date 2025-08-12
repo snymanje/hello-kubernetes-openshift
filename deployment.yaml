@@ -22,7 +22,7 @@ spec:
       securityContext: {}
       containers:
         - name: hello-kubernetes
-          image: 'central-quay-quay-registry.apps.ocp5.ho.fosltd.co.za/dev-platforms/hello-kubernetes:v1.10'
+          image: 'docker.io/paulbouwer/hello-kubernetes:1.10'
           ports:
             - containerPort: 8080
               protocol: TCP
